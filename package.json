@@ -1,0 +1,43 @@
+{
+  "name": "graphql-auth",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/server",
+    "clean": "rm -rf dist",
+    "build": "npm -s run clean && npm -s run generate && tsc",
+    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "ts-node --transpile-only src/schema",
+    "postinstall": "npm -s run generate",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/server",
+    "seed": "ts-node prisma/seed"
+  },
+  "dependencies": {
+    "@prisma/client": "2.0.0-beta.1",
+    "bcryptjs": "2.4.3",
+    "dotenv": "^8.2.0",
+    "graphql": "14.6.0",
+    "graphql-shield": "5.7.3",
+    "graphql-yoga": "1.18.3",
+    "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "8.5.1",
+    "nexus": "0.12.0",
+    "nexus-prisma": "0.11.1",
+    "passport": "^0.4.1"
+  },
+  "devDependencies": {
+    "@prisma/cli": "2.0.0-beta.1",
+    "@types/bcryptjs": "2.4.2",
+    "@types/jsonwebtoken": "8.3.9",
+    "@types/node": "12.12.39",
+    "ts-node": "8.10.1",
+    "ts-node-dev": "1.0.0-pre.44",
+    "typescript": "3.9.2",
+    "@types/isomorphic-fetch": "0.0.35"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
+  }
+}

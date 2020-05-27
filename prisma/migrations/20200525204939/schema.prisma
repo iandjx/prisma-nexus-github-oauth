@@ -1,0 +1,27 @@
+datasource db {
+  provider = "sqlite"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Post {
+  id        Int     @default(autoincrement()) @id
+  title     String
+  content   String?
+  published Boolean @default(false)
+  authorId  Int?
+  author    User?   @relation(fields: [authorId], references: [id])
+}
+
+model User {
+  id           Int     @default(autoincrement()) @id
+  name         String?
+  githubUserId String  @unique
+  bio          String?
+  public_repos Int
+  public_gists Int
+  Post         Post[]
+}
