@@ -8,7 +8,7 @@ type AuthPayload {
 }
 
 type Mutation {
-  authenticate(githubCode: String): AuthPayload!
+  authenticate(authToken: String, bio: String, githubUserId: Int, name: String, public_gists: Int, public_repos: Int, refreshToken: String): AuthPayload!
 }
 
 type Query {
@@ -16,10 +16,12 @@ type Query {
 }
 
 type User {
+  authToken: String!
   bio: String
   githubUserId: String!
   id: Int!
   name: String
   public_gists: Int!
   public_repos: Int!
+  refreshToken: String!
 }

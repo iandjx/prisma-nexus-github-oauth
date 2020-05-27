@@ -9,5 +9,7 @@ export const User = objectType({
     t.model.bio()
     t.model.public_gists()
     t.model.public_repos()
+    t.model.authToken()
+    t.model.refreshToken()
   },
 })

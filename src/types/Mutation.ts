@@ -9,26 +9,43 @@ export const Mutation = mutationType({
     t.field('authenticate', {
       type: 'AuthPayload',
       args: {
-        githubCode: stringArg(),
+        githubUserId: intArg(),
+        name: stringArg(),
+        bio: stringArg(),
+        public_repos: intArg(),
+        public_gists: intArg(),
+        authToken: stringArg(),
+        refreshToken: stringArg(),
       },
-      resolve: async (_parent, { githubCode }, ctx) => {
-        const githubToken = await getGithubToken(githubCode!)
-        const githubUser = await getGithubUser(githubToken)
-
+      resolve: async (
+        _parent,
+        {
+          githubUserId,
+          name,
+          bio,
+          public_repos,
+          public_gists,
+          authToken,
+          refreshToken,
+        },
+        ctx,
+      ) => {
         let user = await ctx.prisma.user.findOne({
           where: {
-            githubUserId: String(githubUser.id),
+            githubUserId: String(githubUserId),
           },
         })
 
         if (!user) {
           user = await ctx.prisma.user.create({
             data: {
-              githubUserId: String(githubUser.id),
-              name: githubUser.name,
-              bio: githubUser.bio,
-              public_repos: githubUser.public_repos,
-              public_gists: githubUser.public_gists,
+              githubUserId: String(githubUserId),
+              name: name,
+              bio: bio,
+              public_repos: public_repos!,
+              public_gists: public_gists!,
+              authToken: authToken!,
+              refreshToken: refreshToken!,
             },
           })
         }
